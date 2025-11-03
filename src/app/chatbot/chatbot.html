@@ -1,0 +1,37 @@
+<div class="chatbot-container">
+  <div class="chatbot-header">
+    <h2>SimpleChatBot</h2>
+    <p class="subtitle">A simple chatbot interface</p>
+  </div>
+  
+  <div class="messages-container">
+    @for (message of messages(); track message.timestamp) {
+      <div class="message" [class.user-message]="message.sender === 'user'" 
+           [class.bot-message]="message.sender === 'bot'">
+        <div class="message-content">
+          <span class="message-text">{{ message.text }}</span>
+          <span class="message-time">{{ message.timestamp | date:'short' }}</span>
+        </div>
+      </div>
+    }
+  </div>
+  
+  <div class="input-container">
+    <input 
+      type="text" 
+      [(ngModel)]="userInput"
+      (keypress)="handleKeyPress($event)"
+      placeholder="Type your message here..."
+      class="message-input"
+      aria-label="Message input"
+    />
+    <button 
+      (click)="sendMessage()" 
+      class="send-button"
+      [disabled]="!userInput().trim()"
+      aria-label="Send message"
+    >
+      Send
+    </button>
+  </div>
+</div>
